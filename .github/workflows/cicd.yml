@@ -4,7 +4,7 @@ on:
     branches: [ main ]
 
 permissions:
-  contents: write      # commit the .portainer.env bump to deploy branch
+  contents: write      # commit the .env bump to deploy branch
   packages: write      # push to GHCR
 
 jobs:
@@ -38,15 +38,15 @@ jobs:
             ghcr.io/${{ github.repository }}:${{ github.sha }}
             ghcr.io/${{ github.repository }}:main
 
-      - name: Update .portainer.env with new tag
+      - name: Update .env with new tag
         run: |
-          echo "IMAGE_TAG=${{ github.sha }}" > .portainer.env
+          echo "IMAGE_TAG=${{ github.sha }}" > .env
 
       - name: Commit & push deploy branch
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git checkout -B deploy
-          git add .portainer.env
-          git commit -m "deploy: $GITHUB_SHA"
+          git add .env
+          git commit -m "deploy: $GITHUB_SHA" || echo "No changes to commit"
           git push origin deploy --force
