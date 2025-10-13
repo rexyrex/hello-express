@@ -3,7 +3,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.get('/hello', (req, res) => {
-  res.type('text/plain').send('hello world');
+  res.type('text/plain').send('hello world 2');
 });
 
 // Optional health check
